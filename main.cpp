@@ -2,10 +2,14 @@
 #include "DirectXCommon.h"
 #include "ImGuiManager.h"
 
+
 #include "DirectXMath.h"
 using namespace DirectX;
 #include "d3dcompiler.h"
 #pragma comment(lib,"d3dcompiler.lib")
+
+#include "DirectXTex.h"
+#pragma comment(lib,"DirectXTex.lib")
 
 struct Vertex {
 	XMFLOAT3 pos;

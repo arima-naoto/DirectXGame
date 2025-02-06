@@ -1,9 +1,11 @@
-#pragma once
+﻿#pragma once
 #include "fbxsdk.h"
 #include "vector"
 #include "d3d12.h"
 #include "wrl.h"
 #include "DirectXMath.h"
+
+
 
 using Microsoft::WRL::ComPtr;
 using DirectX::XMFLOAT3;
