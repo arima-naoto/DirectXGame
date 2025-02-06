@@ -1,0 +1,4 @@
+root = ture
+
+[*.{cpp,h}]
+charset = utf-8-bom
