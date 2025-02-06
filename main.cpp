@@ -11,6 +11,7 @@ using namespace DirectX;
 #include "DirectXTex.h"
 #pragma comment(lib,"DirectXTex.lib")
 
+
 struct Vertex {
 	XMFLOAT3 pos;
 	XMFLOAT2 uv;
