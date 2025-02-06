@@ -12,10 +12,6 @@ struct Vertex {
 	XMFLOAT2 uv;
 };
 
-struct TexRGBA {
-	unsigned char R, G, B, A;
-};
-
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	WinApp* win = nullptr;
@@ -33,16 +29,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		   {{  0.4f, -0.7f, 0.0f },{1.0f,1.0f}},
 		   {{  0.4f,  0.7f, 0.0f },{1.0f,0.0f}},
 	};
-
-
-	std::vector<TexRGBA> texturedata(256 * 256);
-	for (auto& rgba : texturedata) {
-		rgba.R = rand() % 256;
-		rgba.G = rand() % 256;
-		rgba.B = rand() % 256;
-		rgba.A = 255;
-	}
-
 
 	HRESULT result = S_FALSE;
 
