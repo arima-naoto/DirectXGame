@@ -8,6 +8,12 @@
 #include "wrl.h"
 #include "WinApp.h"
 
+namespace {
+	const uint32_t kNumRTVDescriptor = 4;
+	const uint32_t kLinearRTVStart = 2;
+} // namespace
+
+
 class DirectXCommon {
 
 public: // menber function
@@ -43,7 +49,7 @@ private: // menber Variable
 	ComPtr<ID3D12CommandQueue> cmdQueue_ = nullptr;
 	ComPtr<IDXGISwapChain4> swapChain_ = nullptr;
 	ComPtr<ID3D12DescriptorHeap> rtvHeaps_ = nullptr;
-	std::vector<ComPtr<ID3D12Resource>> backBuffer_;
+	std::vector<ComPtr<ID3D12Resource>> backBuffers_;
 	ComPtr<ID3D12Resource> depthBuffer_ = nullptr;
 	ComPtr<ID3D12DescriptorHeap> dsvHeap_ = nullptr;
 	ComPtr<ID3D12Fence> fence = nullptr;

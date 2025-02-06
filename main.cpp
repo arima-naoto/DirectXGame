@@ -287,10 +287,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	texResDesc.Format = metadata.format;
 	texResDesc.Width = static_cast<UINT>(metadata.width);
 	texResDesc.Height = static_cast<UINT>(metadata.height);
-	texResDesc.DepthOrArraySize = static_cast<UINT16>(metadata.arraySize);
+	texResDesc.DepthOrArraySize = static_cast<UINT>(metadata.arraySize);
 	texResDesc.SampleDesc.Count = 1;
 	texResDesc.SampleDesc.Quality = 0;
-	texResDesc.MipLevels = static_cast<UINT16>(metadata.mipLevels);
+	texResDesc.MipLevels = static_cast<UINT>(metadata.mipLevels);
 	texResDesc.Dimension = static_cast<D3D12_RESOURCE_DIMENSION>(metadata.dimension);
 	texResDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
 	texResDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
@@ -301,7 +301,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// 画像データをGPUに転送する
 	result = texBuff->WriteToSubresource(0, nullptr, img->pixels, 
-		img->rowPitch, img->slicePitch);
+		static_cast<UINT>(img->rowPitch), static_cast<UINT>(img->slicePitch));
 
 
 

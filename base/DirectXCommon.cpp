@@ -39,7 +39,7 @@ void DirectXCommon::BeginDraw()
 {
 	auto bbIdx = swapChain_->GetCurrentBackBufferIndex();
 
-	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(backBuffer_[bbIdx].Get(),
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(backBuffers_[bbIdx].Get(),
 		D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
 	cmdList_->ResourceBarrier(1, &barrier);
 
@@ -68,7 +68,7 @@ void DirectXCommon::EndDraw()
 {
 	auto bbIdx = swapChain_->GetCurrentBackBufferIndex();
 
-	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(backBuffer_[bbIdx].Get(),
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(backBuffers_[bbIdx].Get(),
 		D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
 	cmdList_->ResourceBarrier(1, &barrier);
@@ -98,7 +98,7 @@ IDXGIFactory6* DirectXCommon::GetFactory() { return dxgiFactory_.Get(); }
 
 ID3D12GraphicsCommandList* DirectXCommon::GetCmdList() { return cmdList_.Get(); }
 
-size_t DirectXCommon::GetBackBuffer() { return backBuffer_.size(); }
+size_t DirectXCommon::GetBackBuffer() { return backBuffers_.size(); }
 
 void DirectXCommon::InitializeDXGIDevice() {
 	HRESULT result = S_FALSE;
@@ -199,6 +199,9 @@ void DirectXCommon::CreateSwapChain() {
 void DirectXCommon::CreateFinalRenderTarget() {
 	HRESULT result = S_FALSE;
 
+	DXGI_SWAP_CHAIN_DESC swcDesc = {};
+	result = swapChain_->GetDesc(&swcDesc);
+
 	D3D12_DESCRIPTOR_HEAP_DESC heapdesc = {};
 	heapdesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 	heapdesc.NodeMask = 0;
@@ -208,19 +211,18 @@ void DirectXCommon::CreateFinalRenderTarget() {
 	result = dev_->CreateDescriptorHeap(&heapdesc, IID_PPV_ARGS(rtvHeaps_.ReleaseAndGetAddressOf()));
 	assert(SUCCEEDED(result));
 
-	DXGI_SWAP_CHAIN_DESC swcDesc = {};
-	result = swapChain_->GetDesc(&swcDesc);
-
-	backBuffer_.resize(swcDesc.BufferCount);
+	backBuffers_.resize(swcDesc.BufferCount);
 	D3D12_CPU_DESCRIPTOR_HANDLE handle = rtvHeaps_->GetCPUDescriptorHandleForHeapStart();
 
-	
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+	rtvDesc.Format = DXGI_FORMAT_B8G8R8X8_UNORM;
+	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
-	for (UINT idx = 0; idx < swcDesc.BufferCount; ++idx) {
-		result = swapChain_->GetBuffer(idx, IID_PPV_ARGS(&backBuffer_[idx]));
+	for (UINT idx = 0; idx < backBuffers_.size(); ++idx) {
+		result = swapChain_->GetBuffer(idx, IID_PPV_ARGS(&backBuffers_[idx]));
 		assert(SUCCEEDED(result));
-
-		dev_->CreateRenderTargetView(backBuffer_[idx].Get(), nullptr, handle);
+		rtvDesc.Format = backBuffers_[idx]->GetDesc().Format;
+		dev_->CreateRenderTargetView(backBuffers_[idx].Get(), &rtvDesc, handle);
 		handle.ptr += dev_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 	}
 }
@@ -230,16 +232,17 @@ void DirectXCommon::CreateDepthBuffer() {
 	HRESULT result = S_FALSE;
 
 	CD3DX12_RESOURCE_DESC depthResDesc = CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_D32_FLOAT,
-		backBufferWidth_, backBufferHeight_, 1, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
+		backBufferWidth_, backBufferHeight_, 1, 0, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
 
-	CD3DX12_HEAP_PROPERTIES depthHeapProp(D3D12_HEAP_TYPE_DEFAULT);
+	CD3DX12_HEAP_PROPERTIES depthHeapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT, 0, 0);
 
 	CD3DX12_CLEAR_VALUE depthClearValue = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_D32_FLOAT, 1.0f, 0);
 
+	
 	result = dev_->CreateCommittedResource(&depthHeapProp, D3D12_HEAP_FLAG_NONE, &depthResDesc,
 		D3D12_RESOURCE_STATE_DEPTH_WRITE, &depthClearValue, IID_PPV_ARGS(depthBuffer_.ReleaseAndGetAddressOf()));
-
 	assert(SUCCEEDED(result));
+
 	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc = {};
 	dsvHeapDesc.NumDescriptors = 1;
 	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
