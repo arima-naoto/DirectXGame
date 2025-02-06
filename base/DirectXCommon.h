@@ -52,6 +52,8 @@ private: // menber Variable
 	int32_t backBufferHeight_ = 0;
 	UINT64 fenceVal = 0;
 
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+
 
 private: // menber function
 

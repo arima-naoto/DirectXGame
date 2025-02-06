@@ -259,6 +259,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ID3D12PipelineState* pipelineState = nullptr;
 	result = dxCommon->GetDevice()->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(&pipelineState));
 
+	TexMetadata metadata = {};
+	ScratchImage scratchImg = {};
+
+	result = LoadFromWICFile(L"Resources/textest.png", WIC_FLAGS_NONE, &metadata, scratchImg);
+	auto img = scratchImg.GetImage(0, 0, 0);
+
 	// テスクチャデータの作成
 	std::vector<TexRGBA> textureData(256 * 256);
 	for (auto& rgba : textureData) {
@@ -278,14 +284,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	texheapProp.VisibleNodeMask = 0;
 
 	D3D12_RESOURCE_DESC texResDesc = {};
-	texResDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	texResDesc.Width = 256;
-	texResDesc.Height = 256;
-	texResDesc.DepthOrArraySize = 1;
+	texResDesc.Format = metadata.format;
+	texResDesc.Width = static_cast<UINT>(metadata.width);
+	texResDesc.Height = static_cast<UINT>(metadata.height);
+	texResDesc.DepthOrArraySize = static_cast<UINT16>(metadata.arraySize);
 	texResDesc.SampleDesc.Count = 1;
 	texResDesc.SampleDesc.Quality = 0;
-	texResDesc.MipLevels = 1;
-	texResDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+	texResDesc.MipLevels = static_cast<UINT16>(metadata.mipLevels);
+	texResDesc.Dimension = static_cast<D3D12_RESOURCE_DIMENSION>(metadata.dimension);
 	texResDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
 	texResDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
 
@@ -293,8 +299,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	result = dxCommon->GetDevice()->CreateCommittedResource(&texheapProp, D3D12_HEAP_FLAG_NONE,
 		&texResDesc, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, nullptr, IID_PPV_ARGS(&texBuff));
 
-	result = texBuff->WriteToSubresource(0, nullptr, textureData.data(),
-		UINT(sizeof(TexRGBA) * 256), UINT(sizeof(TexRGBA) * textureData.size()));
+	// 画像データをGPUに転送する
+	result = texBuff->WriteToSubresource(0, nullptr, img->pixels, 
+		img->rowPitch, img->slicePitch);
 
 
 
@@ -314,7 +321,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// シェーダーリソースビューの作成
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	srvDesc.Format = metadata.format;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = 1;

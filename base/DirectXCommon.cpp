@@ -214,6 +214,8 @@ void DirectXCommon::CreateFinalRenderTarget() {
 	backBuffer_.resize(swcDesc.BufferCount);
 	D3D12_CPU_DESCRIPTOR_HANDLE handle = rtvHeaps_->GetCPUDescriptorHandleForHeapStart();
 
+	
+
 	for (UINT idx = 0; idx < swcDesc.BufferCount; ++idx) {
 		result = swapChain_->GetBuffer(idx, IID_PPV_ARGS(&backBuffer_[idx]));
 		assert(SUCCEEDED(result));
@@ -228,17 +230,16 @@ void DirectXCommon::CreateDepthBuffer() {
 	HRESULT result = S_FALSE;
 
 	CD3DX12_RESOURCE_DESC depthResDesc = CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_D32_FLOAT,
-		backBufferWidth_, backBufferHeight_, 1, 0, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
+		backBufferWidth_, backBufferHeight_, 1, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
 
-	CD3DX12_HEAP_PROPERTIES depthHeapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT, 0, 0);
+	CD3DX12_HEAP_PROPERTIES depthHeapProp(D3D12_HEAP_TYPE_DEFAULT);
 
 	CD3DX12_CLEAR_VALUE depthClearValue = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_D32_FLOAT, 1.0f, 0);
 
-	
 	result = dev_->CreateCommittedResource(&depthHeapProp, D3D12_HEAP_FLAG_NONE, &depthResDesc,
 		D3D12_RESOURCE_STATE_DEPTH_WRITE, &depthClearValue, IID_PPV_ARGS(depthBuffer_.ReleaseAndGetAddressOf()));
-	assert(SUCCEEDED(result));
 
+	assert(SUCCEEDED(result));
 	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc = {};
 	dsvHeapDesc.NumDescriptors = 1;
 	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
