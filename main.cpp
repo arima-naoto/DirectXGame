@@ -333,6 +333,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	result = dxCommon->GetDevice()->CreateCommittedResource(&texheapProp, D3D12_HEAP_FLAG_NONE,
 		&resDesc, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_PPV_ARGS(&texBuff));
 
+	// 画像データーをGPUに転送する
+	result = texBuff->WriteToSubresource(0, nullptr, img->pixels, 
+		static_cast<UINT>(img->rowPitch), static_cast<UINT>(img->slicePitch));
+
 	// アップロードリソースへのマップ
 	uint8_t* mapforImg = nullptr;
 	result = uploadBuff->Map(0, nullptr, (void**)&mapforImg);
