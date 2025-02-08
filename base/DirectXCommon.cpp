@@ -96,9 +96,17 @@ ID3D12Device* DirectXCommon::GetDevice() { return dev_.Get(); }
 
 IDXGIFactory6* DirectXCommon::GetFactory() { return dxgiFactory_.Get(); }
 
+ID3D12CommandAllocator* DirectXCommon::GetAllocator() { return cmdAllocator_.Get(); }
+
 ID3D12GraphicsCommandList* DirectXCommon::GetCmdList() { return cmdList_.Get(); }
 
+ID3D12CommandQueue* DirectXCommon::GetCmdQueue() { return cmdQueue_.Get(); }
+
+ID3D12Fence* DirectXCommon::GetFence() { return fence.Get(); }
+
 size_t DirectXCommon::GetBackBuffer() { return backBuffers_.size(); }
+
+UINT64 DirectXCommon::GetFenceVal() { return fenceVal; }
 
 void DirectXCommon::InitializeDXGIDevice() {
 	HRESULT result = S_FALSE;

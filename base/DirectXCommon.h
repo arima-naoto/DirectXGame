@@ -31,9 +31,17 @@ public: // menber function
 
 	IDXGIFactory6* GetFactory();
 
+	ID3D12CommandAllocator* GetAllocator();
+
 	ID3D12GraphicsCommandList* GetCmdList();
 
+	ID3D12CommandQueue* GetCmdQueue();
+
+	ID3D12Fence* GetFence();
+
 	size_t GetBackBuffer();
+
+	UINT64 GetFenceVal();
 
 private: // menber Variable
 
