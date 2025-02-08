@@ -22,6 +22,12 @@
     <Filter Include="シェーダーファイル\FBX">
       <UniqueIdentifier>{0e4e8394-1962-4486-abd7-9ce41c80f92c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\base">
+      <UniqueIdentifier>{f0e060e8-f2ce-4b50-9e62-5911ee1df71e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\base">
+      <UniqueIdentifier>{8cdc379c-53bb-48bd-b1bb-ae16efc36cf8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External\imgui\imgui.cpp">
@@ -45,17 +51,17 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="base\WinApp.cpp">
+    <ClCompile Include="FBXLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="base\DirectXCommon.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="base\WinApp.cpp">
+      <Filter>ソース ファイル\base</Filter>
     </ClCompile>
     <ClCompile Include="ImGuiManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="FBXLoader.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,17 +86,17 @@
     <ClInclude Include="..\External\imgui\imstb_truetype.h">
       <Filter>ヘッダー ファイル\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="base\WinApp.h">
+    <ClInclude Include="FBXLoader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="base\DirectXCommon.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="base\WinApp.h">
+      <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="FBXLoader.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
