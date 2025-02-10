@@ -51,9 +51,6 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="FBXLoader.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="base\DirectXCommon.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
@@ -62,6 +59,9 @@
     </ClCompile>
     <ClCompile Include="ImGuiManager.cpp">
       <Filter>ソース ファイル\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +86,6 @@
     <ClInclude Include="..\External\imgui\imstb_truetype.h">
       <Filter>ヘッダー ファイル\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="FBXLoader.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="base\DirectXCommon.h">
       <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
@@ -98,6 +95,9 @@
     <ClInclude Include="ImGuiManager.h">
       <Filter>ヘッダー ファイル\imgui</Filter>
     </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\BasicPixelShader.hlsl">
@@ -105,12 +105,6 @@
     </FxCompile>
     <FxCompile Include="Shader\BasicVertexShader.hlsl">
       <Filter>シェーダーファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="FBXPixelShader.hlsl">
-      <Filter>シェーダーファイル\FBX</Filter>
-    </FxCompile>
-    <FxCompile Include="FBXVertexShader.hlsl">
-      <Filter>シェーダーファイル\FBX</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
