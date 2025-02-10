@@ -1,6 +1,7 @@
 ﻿#include "WinApp.h"
 #include "DirectXCommon.h"
 #include "ImGuiManager.h"
+#include "Input.h"
 
 #include "DirectXMath.h"
 using namespace DirectX;
@@ -33,12 +34,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	WinApp* win = nullptr;
 	DirectXCommon* dxCommon = nullptr;
+	Input* input = nullptr;
 
 	win = WinApp::GetInstance();
 	win->CreateGameWindow();
 
 	dxCommon = DirectXCommon::GetInstance();
 	dxCommon->Initialize(win);
+
+	input = Input::GetInstance();
+	input->Initialize();
 
 	Vertex vertices[] = {
 		   {{-1.0f, -1.0f, 0.0f },{0.0f,1.0f}},
@@ -478,12 +483,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		imguiManager->Begin();		
+		input->Update();
 
-		
 		angle += 0.01f;
+
 		worldMat = XMMatrixRotationY(angle);
 		*mapMatrix = worldMat * viewMat * projMat;
-
 
 		imguiManager->End();
 

@@ -1,4 +1,4 @@
-#include "WinApp.h"
+﻿#include "WinApp.h"
 
 #ifdef _DEBUG
 #include "imgui_impl_win32.h"
@@ -68,5 +68,7 @@ void WinApp::Terminate() {
 }
 
 HWND WinApp::GetHWND() { return hwnd; }
+
+WNDCLASSEX WinApp::GetWndClass() { return wc; }
 
 

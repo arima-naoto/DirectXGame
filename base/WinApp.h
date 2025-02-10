@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Windows.h"
 #include "string"
 
@@ -21,6 +21,8 @@ public:
 	void Terminate();
 
 	HWND GetHWND();
+
+	WNDCLASSEX GetWndClass();
 
 private:
 
