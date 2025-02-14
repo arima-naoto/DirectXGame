@@ -45,8 +45,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	HRESULT result = S_FALSE;
 
-#pragma region 頂点バッファーの生成
-
 	CD3DX12_HEAP_PROPERTIES heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 
 	CD3DX12_RESOURCE_DESC resdesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(vertices));
@@ -55,15 +53,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	result = dxCommon->GetDevice()->CreateCommittedResource(&heapProp, D3D12_HEAP_FLAG_NONE, &resdesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&vertBuff));
 
-#pragma endregion
-
 	// 頂点情報のコピー
 	Vertex* vertMap = nullptr;
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	std::copy(std::begin(vertices), std::end(vertices), vertMap);
 	vertBuff->Unmap(0, nullptr);
-
-#pragma region 頂点バッファービューとインデックスバッファビューの生成
 
 	D3D12_VERTEX_BUFFER_VIEW vbView = {};
 	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
@@ -90,10 +84,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ibView.BufferLocation = idxBuff->GetGPUVirtualAddress();
 	ibView.Format = DXGI_FORMAT_R16_UINT;
 	ibView.SizeInBytes = sizeof(indices);
-
-#pragma endregion
-
-#pragma region シェーダーファイルの読み込み
 
 	ID3DBlob* vsBlob = nullptr;
 	ID3DBlob* psBlob = nullptr;
@@ -143,8 +133,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 		exit(1);
 	}
-
-#pragma endregion
 
 	// 頂点レイアウトの作成
 	D3D12_INPUT_ELEMENT_DESC inputLayout[] =
@@ -272,36 +260,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		rgba.A = 255;
 	}
 
-#pragma region アップロード用リソースの作成
-
-	// 中間バッファーとしてのアップロードヒープ設定
-	D3D12_HEAP_PROPERTIES uploadHeapProp = {};
-	uploadHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
-	uploadHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-	uploadHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-	uploadHeapProp.CreationNodeMask = 0;
-	uploadHeapProp.VisibleNodeMask = 0;
-
-	// リソース設定
-	D3D12_RESOURCE_DESC resDesc = {};
-	resDesc.Format = DXGI_FORMAT_UNKNOWN;
-	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	resDesc.Width = AlignmentedSize(img->rowPitch, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT) * img->height;
-	resDesc.Height = 1;
-	resDesc.DepthOrArraySize = 1;
-	resDesc.MipLevels = 1;
-	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-	resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
-	resDesc.SampleDesc.Count = 1;
-	resDesc.SampleDesc.Quality = 0;
-	
-	// 中間バッファーの作成
-	ID3D12Resource* uploadBuff = nullptr;
-	result = dxCommon->GetDevice()->CreateCommittedResource(&uploadHeapProp,
-		D3D12_HEAP_FLAG_NONE,&resDesc,D3D12_RESOURCE_STATE_GENERIC_READ,nullptr,IID_PPV_ARGS(&uploadBuff));
-
-#pragma endregion
-
 	D3D12_HEAP_PROPERTIES texheapProp = {};
 	texheapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
 	texheapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
@@ -310,17 +268,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	texheapProp.VisibleNodeMask = 0;
 
 	// リソース設定
-	resDesc.Format = metadata.format;
-	resDesc.Width = static_cast<UINT>(metadata.width);
-	resDesc.Height = static_cast<UINT>(metadata.height);
-	resDesc.DepthOrArraySize = static_cast<UINT>(metadata.arraySize);
-	resDesc.MipLevels = static_cast<UINT>(metadata.mipLevels);
-	resDesc.Dimension = static_cast<D3D12_RESOURCE_DIMENSION>(metadata.dimension);
-	resDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
+	resdesc.Format = metadata.format;
+	resdesc.Width = static_cast<UINT>(metadata.width);
+	resdesc.Height = static_cast<UINT>(metadata.height);
+	resdesc.DepthOrArraySize = static_cast<UINT>(metadata.arraySize);
+	resdesc.MipLevels = static_cast<UINT>(metadata.mipLevels);
+	resdesc.Dimension = static_cast<D3D12_RESOURCE_DIMENSION>(metadata.dimension);
+	resdesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
 
 	ID3D12Resource* texBuff = nullptr;
 	result = dxCommon->GetDevice()->CreateCommittedResource(&texheapProp, D3D12_HEAP_FLAG_NONE,
-		&resDesc, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_PPV_ARGS(&texBuff));
+		&resdesc, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_PPV_ARGS(&texBuff));
 
 	// 画像データーをGPUに転送する
 	result = texBuff->WriteToSubresource(0, nullptr, img->pixels, 
@@ -343,82 +301,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ID3D12Resource* constBuff = nullptr;
 
 	heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-	resDesc = CD3DX12_RESOURCE_DESC::Buffer((sizeof(worldMat) + 0xff) & ~0xff);
+	resdesc = CD3DX12_RESOURCE_DESC::Buffer((sizeof(worldMat) + 0xff) & ~0xff);
 
-	dxCommon->GetDevice()->CreateCommittedResource(&heapProp, D3D12_HEAP_FLAG_NONE, &resDesc,
+	dxCommon->GetDevice()->CreateCommittedResource(&heapProp, D3D12_HEAP_FLAG_NONE, &resdesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&constBuff));
 
 	// マップによる定数のコピー
 	XMMATRIX* mapMatrix;
 	result = constBuff->Map(0, nullptr, (void**)&mapMatrix);
 	*mapMatrix = worldMat * viewMat * projMat;
-
-
-	// アップロードリソースへのマップ
-	uint8_t* mapforImg = nullptr;
-	result = uploadBuff->Map(0, nullptr, (void**)&mapforImg);
-	std::copy_n(img->pixels, img->slicePitch, mapforImg);
-	uploadBuff->Unmap(0, nullptr);
-
-	auto srcAddress = img->pixels;
-	auto rowpitch = AlignmentedSize(img->rowPitch, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT);
-
-	for (int y = 0; y < img->height; y++) {
-		std::copy_n(srcAddress, rowpitch, mapforImg);
-		srcAddress += img->rowPitch;
-		mapforImg += rowpitch;
-	}
-
-	D3D12_TEXTURE_COPY_LOCATION src = {};
-
-	// コピー元(アップロード側)設定
-	src.pResource = uploadBuff;
-	src.Type = D3D12_TEXTURE_COPY_TYPE_PLACED_FOOTPRINT;
-	src.PlacedFootprint.Offset = 0;
-	src.PlacedFootprint.Footprint.Width = static_cast<UINT>(metadata.width);
-	src.PlacedFootprint.Footprint.Height = static_cast<UINT>(metadata.height);
-	src.PlacedFootprint.Footprint.Depth = static_cast<UINT>(metadata.depth);
-	src.PlacedFootprint.Footprint.RowPitch = static_cast<UINT>(AlignmentedSize(img->rowPitch, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT));
-	src.PlacedFootprint.Footprint.Format = img->format;
-
-	D3D12_TEXTURE_COPY_LOCATION dst = {};
-	dst.pResource = texBuff;
-	dst.Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX;
-	dst.SubresourceIndex = 0;
-
-	{
-		dxCommon->GetCmdList()->CopyTextureRegion(&dst, 0, 0, 0, &src, nullptr);
-
-		D3D12_RESOURCE_BARRIER BarrierDesc = {};
-		BarrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-		BarrierDesc.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-		BarrierDesc.Transition.pResource = texBuff;
-		BarrierDesc.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-		BarrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
-		BarrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
-
-		dxCommon->GetCmdList()->ResourceBarrier(1, &BarrierDesc);
-		dxCommon->GetCmdList()->Close();
-
-		ID3D12CommandList* cmdLists[] = { dxCommon->GetCmdList() };
-		dxCommon->GetCmdQueue()->ExecuteCommandLists(1, cmdLists);
-
-		ID3D12Fence* fence = dxCommon->GetFence();
-		UINT64 fenceVal = dxCommon->GetFenceVal();
-
-		dxCommon->GetCmdQueue()->Signal(fence, ++fenceVal);
-		if (fence->GetCompletedValue() != fenceVal) {
-			auto event = CreateEvent(nullptr, false, false, nullptr);
-			fence->SetEventOnCompletion(fenceVal, event);
-			WaitForSingleObject(event, INFINITE);
-			CloseHandle(event);
-		}
-
-		dxCommon->GetAllocator()->Reset();
-		dxCommon->GetCmdList()->Reset(dxCommon->GetAllocator(), nullptr);
-	}
-
-#pragma region シェーダーリソースビュー
 
 	// ディスクリプタヒープの作成
 	ID3D12DescriptorHeap* basicDescHeap = nullptr;
@@ -430,17 +321,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	result = dxCommon->GetDevice()->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&basicDescHeap));
 
-	// シェーダーリソースビューの作成
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-	srvDesc.Format = metadata.format;
-	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-	srvDesc.Texture2D.MipLevels = 1;
-
 	// ディスクリプタの先頭ハンドルを取得しておく
 	auto basicHeapHandle = basicDescHeap->GetCPUDescriptorHandleForHeapStart();
 	// シェーダーリソースビューの作成
-	dxCommon->GetDevice()->CreateShaderResourceView(texBuff, &srvDesc, basicHeapHandle);
+	dxCommon->GetDevice()->CreateShaderResourceView(texBuff, nullptr, basicHeapHandle);
 	basicHeapHandle.ptr += dxCommon->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc = {};
@@ -466,13 +350,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		imguiManager->Begin();		
+		
 		input->Update();
+
 		game->Update();
-
-		angle += 0.01f;
-
-		worldMat = XMMatrixRotationY(angle);
-		*mapMatrix = worldMat * viewMat * projMat;
 
 		imguiManager->End();
 
