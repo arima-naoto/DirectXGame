@@ -13,109 +13,109 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ソース ファイル\imgui">
-      <UniqueIdentifier>{f0ed624c-ccd6-4d7b-a22c-e8f8ef50cc73}</UniqueIdentifier>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{c5920efc-1d5d-418a-a29a-7c19b648499f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\imgui">
-      <UniqueIdentifier>{d7647c8b-5982-4bdf-b5c2-d9012e5ff0a9}</UniqueIdentifier>
+    <Filter Include="Assets\shader">
+      <UniqueIdentifier>{32fd6fe7-9434-436a-90bc-fed88d2ec978}</UniqueIdentifier>
     </Filter>
-    <Filter Include="シェーダーファイル\FBX">
-      <UniqueIdentifier>{0e4e8394-1962-4486-abd7-9ce41c80f92c}</UniqueIdentifier>
+    <Filter Include="Assets\imgui">
+      <UniqueIdentifier>{7be7b659-4d90-4837-8d2a-e47b2d883634}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\base">
-      <UniqueIdentifier>{f0e060e8-f2ce-4b50-9e62-5911ee1df71e}</UniqueIdentifier>
+    <Filter Include="Assets\base">
+      <UniqueIdentifier>{4d597fcc-75d3-4fe5-9e96-c2ee4ada85de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\base">
-      <UniqueIdentifier>{8cdc379c-53bb-48bd-b1bb-ae16efc36cf8}</UniqueIdentifier>
+    <Filter Include="Assets\input">
+      <UniqueIdentifier>{091ac459-6516-4723-b056-809b7e478c6a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\External\imgui\imgui.cpp">
-      <Filter>ソース ファイル\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\External\imgui\imgui_demo.cpp">
-      <Filter>ソース ファイル\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\External\imgui\imgui_draw.cpp">
-      <Filter>ソース ファイル\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\External\imgui\imgui_impl_dx12.cpp">
-      <Filter>ソース ファイル\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\External\imgui\imgui_impl_win32.cpp">
-      <Filter>ソース ファイル\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\External\imgui\imgui_widgets.cpp">
-      <Filter>ソース ファイル\imgui</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="base\DirectXCommon.cpp">
-      <Filter>ソース ファイル\base</Filter>
+      <Filter>Assets\base</Filter>
     </ClCompile>
     <ClCompile Include="base\WinApp.cpp">
-      <Filter>ソース ファイル\base</Filter>
+      <Filter>Assets\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External\imgui\imgui.cpp">
+      <Filter>Assets\imgui</Filter>
     </ClCompile>
     <ClCompile Include="ImGuiManager.cpp">
-      <Filter>ソース ファイル\imgui</Filter>
+      <Filter>Assets\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\Game.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="..\External\imgui\imgui_demo.cpp">
+      <Filter>Assets\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External\imgui\imgui_draw.cpp">
+      <Filter>Assets\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External\imgui\imgui_impl_dx12.cpp">
+      <Filter>Assets\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External\imgui\imgui_impl_win32.cpp">
+      <Filter>Assets\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External\imgui\imgui_widgets.cpp">
+      <Filter>Assets\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Input\Input.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Assets\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Game.cpp">
+      <Filter>Assets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\External\imgui\imgui.h">
-      <Filter>ヘッダー ファイル\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External\imgui\imgui_impl_dx12.h">
-      <Filter>ヘッダー ファイル\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External\imgui\imgui_impl_win32.h">
-      <Filter>ヘッダー ファイル\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External\imgui\imgui_internal.h">
-      <Filter>ヘッダー ファイル\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External\imgui\imstb_rectpack.h">
-      <Filter>ヘッダー ファイル\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External\imgui\imstb_textedit.h">
-      <Filter>ヘッダー ファイル\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External\imgui\imstb_truetype.h">
-      <Filter>ヘッダー ファイル\imgui</Filter>
-    </ClInclude>
     <ClInclude Include="base\DirectXCommon.h">
-      <Filter>ヘッダー ファイル\base</Filter>
+      <Filter>Assets\base</Filter>
     </ClInclude>
     <ClInclude Include="base\WinApp.h">
-      <Filter>ヘッダー ファイル\base</Filter>
+      <Filter>Assets\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\imgui\imgui.h">
+      <Filter>Assets\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\imgui\imgui_impl_dx12.h">
+      <Filter>Assets\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\imgui\imgui_impl_win32.h">
+      <Filter>Assets\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\imgui\imgui_internal.h">
+      <Filter>Assets\imgui</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiManager.h">
-      <Filter>ヘッダー ファイル\imgui</Filter>
+      <Filter>Assets\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\Game.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="..\External\imgui\imstb_rectpack.h">
+      <Filter>Assets\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\imgui\imstb_textedit.h">
+      <Filter>Assets\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\imgui\imstb_truetype.h">
+      <Filter>Assets\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Input\Input.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Assets\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Game.h">
+      <Filter>Assets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Shader\BasicPixelShader.hlsl">
-      <Filter>シェーダーファイル</Filter>
-    </FxCompile>
     <FxCompile Include="Shader\BasicVertexShader.hlsl">
-      <Filter>シェーダーファイル</Filter>
+      <Filter>Assets\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\BasicPixelShader.hlsl">
+      <Filter>Assets\shader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\BasicShaderHeader.hlsli">
-      <Filter>シェーダーファイル</Filter>
+      <Filter>Assets\shader</Filter>
     </None>
   </ItemGroup>
 </Project>
