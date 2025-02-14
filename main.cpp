@@ -2,6 +2,7 @@
 #include "DirectXCommon.h"
 #include "ImGuiManager.h"
 #include "Input.h"
+#include "Game.h"
 
 #include "Structure.h"
 
@@ -24,6 +25,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp* win = nullptr;
 	DirectXCommon* dxCommon = nullptr;
 	Input* input = nullptr;
+	Game* game = nullptr;
 
 	win = WinApp::GetInstance();
 	win->CreateGameWindow();
@@ -48,17 +50,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	CD3DX12_HEAP_PROPERTIES heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 
 	CD3DX12_RESOURCE_DESC resdesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(vertices));
-
-	//D3D12_RESOURCE_DESC resdesc = {};
-	//resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	//resdesc.Width = ;
-	//resdesc.Height = 1;
-	//resdesc.DepthOrArraySize = 1;
-	//resdesc.MipLevels = 1;
-	//resdesc.Format = DXGI_FORMAT_UNKNOWN;
-	//resdesc.SampleDesc.Count = 1;
-	//resdesc.Flags = D3D12_RESOURCE_FLAG_NONE;
-	//resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	ID3D12Resource* vertBuff = nullptr;
 	result = dxCommon->GetDevice()->CreateCommittedResource(&heapProp, D3D12_HEAP_FLAG_NONE, &resdesc,
@@ -464,6 +455,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
 	imguiManager->Initialize(win, dxCommon);
 
+	game = new Game();
+	game->Initialize();
+
 	float angle = 0.0f;
 
 	while (true) {
@@ -473,6 +467,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		imguiManager->Begin();		
 		input->Update();
+		game->Update();
 
 		angle += 0.01f;
 
@@ -503,6 +498,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 #pragma endregion
+
+		game->Draw();
 		
 		dxCommon->EndDraw();
 	}

@@ -96,7 +96,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\math;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\Input;C:\HomeBrewEngine\DirectXGame\Scene;C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\math;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -113,7 +113,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\math;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\Input;C:\HomeBrewEngine\DirectXGame\Scene;C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\math;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -130,7 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\math;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\Input;C:\HomeBrewEngine\DirectXGame\Scene;C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\math;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -147,7 +147,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\math;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\Input;C:\HomeBrewEngine\DirectXGame\Scene;C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\math;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -168,8 +168,9 @@
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="ImGuiManager.cpp" />
-    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scene\Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\External\imgui\imgui.h" />
@@ -182,7 +183,8 @@
     <ClInclude Include="base\DirectXCommon.h" />
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="ImGuiManager.h" />
-    <ClInclude Include="Input.h" />
+    <ClInclude Include="Input\Input.h" />
+    <ClInclude Include="Scene\Game.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\BasicPixelShader.hlsl">
