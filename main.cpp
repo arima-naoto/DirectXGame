@@ -39,6 +39,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	input->Initialize();
 
 	HRESULT result = S_FALSE;
+	ID3D12Device* device = dxCommon->GetDevice();
 
 	char signature[3] = {};
 	PMDHeader pmdHeader{};
@@ -62,7 +63,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	CD3DX12_RESOURCE_DESC resdesc = CD3DX12_RESOURCE_DESC::Buffer(vertices.size());
 
 	ID3D12Resource* vertBuff = nullptr;
-	result = dxCommon->GetDevice()->CreateCommittedResource(&heapProp, D3D12_HEAP_FLAG_NONE, &resdesc,
+	result = device->CreateCommittedResource(&heapProp, D3D12_HEAP_FLAG_NONE, &resdesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&vertBuff));
 
 	// 頂点情報のコピー
@@ -88,7 +89,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	resdesc = CD3DX12_RESOURCE_DESC::Buffer(vertices.size() * sizeof(indices[0]));
 
-	result = dxCommon->GetDevice()->CreateCommittedResource(&heapProp, D3D12_HEAP_FLAG_NONE, &resdesc,
+	result = device->CreateCommittedResource(&heapProp, D3D12_HEAP_FLAG_NONE, &resdesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&idxBuff));
 
 	unsigned short* mappedIdx = nullptr;
@@ -258,14 +259,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	ID3DBlob* rootSigBlob = nullptr;
 	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
-	result = dxCommon->GetDevice()->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
+	result = device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
 		rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
 	rootSigBlob->Release();
 	gpipeline.pRootSignature = rootSignature;
 
 	// グラフィックスパイプラインステートオブジェクトの生成
 	ID3D12PipelineState* pipelineState = nullptr;
-	result = dxCommon->GetDevice()->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(&pipelineState));
+	result = device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(&pipelineState));
 
 	TexMetadata metadata = {};
 	ScratchImage scratchImg = {};
@@ -290,7 +291,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	resdesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
 
 	ID3D12Resource* texBuff = nullptr;
-	result = dxCommon->GetDevice()->CreateCommittedResource(&texheapProp, D3D12_HEAP_FLAG_NONE,
+	result = device->CreateCommittedResource(&texheapProp, D3D12_HEAP_FLAG_NONE,
 		&resdesc, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_PPV_ARGS(&texBuff));
 
 	// 画像データーをGPUに転送する
@@ -317,7 +318,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	resdesc = CD3DX12_RESOURCE_DESC::Buffer((sizeof(MatricesData) + 0xff) & ~0xff);
 
-	dxCommon->GetDevice()->CreateCommittedResource(&heapProp, D3D12_HEAP_FLAG_NONE, &resdesc,
+	device->CreateCommittedResource(&heapProp, D3D12_HEAP_FLAG_NONE, &resdesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&constBuff));
 
 	// マップによる定数のコピー
@@ -334,20 +335,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	descHeapDesc.NodeMask = 0;
 	descHeapDesc.NumDescriptors = 2;
 	descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	result = dxCommon->GetDevice()->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&basicDescHeap));
+	result = device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&basicDescHeap));
 
 	// ディスクリプタの先頭ハンドルを取得しておく
 	auto basicHeapHandle = basicDescHeap->GetCPUDescriptorHandleForHeapStart();
 	// シェーダーリソースビューの作成
-	dxCommon->GetDevice()->CreateShaderResourceView(texBuff, nullptr, basicHeapHandle);
-	basicHeapHandle.ptr += dxCommon->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	device->CreateShaderResourceView(texBuff, nullptr, basicHeapHandle);
+	basicHeapHandle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc = {};
 	cbvDesc.BufferLocation = constBuff->GetGPUVirtualAddress();
 	cbvDesc.SizeInBytes = static_cast<UINT>(constBuff->GetDesc().Width);
 
 	// 定数バッファビューの作成
-	dxCommon->GetDevice()->CreateConstantBufferView(&cbvDesc, basicHeapHandle);
+	device->CreateConstantBufferView(&cbvDesc, basicHeapHandle);
 
 #pragma endregion
 
@@ -382,20 +383,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma region 四角形の描画命令
 
-		dxCommon->GetCmdList()->SetPipelineState(pipelineState);
+		ID3D12GraphicsCommandList *cmdList = dxCommon->GetCmdList();
 
-		dxCommon->GetCmdList()->SetGraphicsRootSignature(rootSignature);
+		cmdList->SetPipelineState(pipelineState);
+		cmdList->SetGraphicsRootSignature(rootSignature);
 
-		dxCommon->GetCmdList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		dxCommon->GetCmdList()->IASetVertexBuffers(0, 1, &vbView);
-		dxCommon->GetCmdList()->IASetIndexBuffer(&ibView);
+		cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		cmdList->IASetVertexBuffers(0, 1, &vbView);
+		cmdList->IASetIndexBuffer(&ibView);
 
-		dxCommon->GetCmdList()->SetGraphicsRootSignature(rootSignature);
-		dxCommon->GetCmdList()->SetDescriptorHeaps(1, &basicDescHeap);
-		dxCommon->GetCmdList()->SetGraphicsRootDescriptorTable(0,
+		cmdList->SetGraphicsRootSignature(rootSignature);
+		cmdList->SetDescriptorHeaps(1, &basicDescHeap);
+		cmdList->SetGraphicsRootDescriptorTable(0,
 			basicDescHeap->GetGPUDescriptorHandleForHeapStart());
 		
-		dxCommon->GetCmdList()->DrawIndexedInstanced(indicesNum, 1, 0, 0,0);
+		cmdList->DrawIndexedInstanced(indicesNum, 1, 0, 0,0);
 
 
 #pragma endregion
