@@ -9,6 +9,7 @@
 #include "DirectXTex.h"
 #pragma comment(lib,"DirectXTex.lib")
 
+#define _CRT_SECURE_NO_WARNINGS
 #include "fstream"
 
 /// <summary>
@@ -42,10 +43,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	char signature[3] = {};
 	PMDHeader pmdHeader{};
 	FILE* fp;
-
-	auto err = fopen_s(&fp, "Resources/初音ミク.pmd", "rb");
+	auto err = fopen_s(&fp,"Resources/初音ミク.pmd", "rb");
 	if (fp == nullptr) {
-		return -1;
+		return 1;
 	}
 
 	fread(signature, sizeof(signature), 1, fp);
@@ -59,7 +59,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	fread(vertices.data(), vertices.size(), 1, fp);
 
 	CD3DX12_HEAP_PROPERTIES heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-	CD3DX12_RESOURCE_DESC resdesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(vertices.size()));
+	CD3DX12_RESOURCE_DESC resdesc = CD3DX12_RESOURCE_DESC::Buffer(vertices.size());
 
 	ID3D12Resource* vertBuff = nullptr;
 	result = dxCommon->GetDevice()->CreateCommittedResource(&heapProp, D3D12_HEAP_FLAG_NONE, &resdesc,
@@ -73,17 +73,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	D3D12_VERTEX_BUFFER_VIEW vbView = {};
 	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-	vbView.SizeInBytes = vertices.size();
+	vbView.SizeInBytes = static_cast<UINT>(vertices.size());
 	vbView.StrideInBytes = pmdvertex_size;
-	fclose(fp);
+	
+	unsigned int indicesNum;
+	fread(&indicesNum, sizeof(indicesNum), 1, fp);
 
-
-	unsigned short indices[] = {
-		0,1,2,2,1,3
-	};
-
+	std::vector<unsigned short> indices(indicesNum);
+	fread(indices.data(), indices.size() * sizeof(indices[0]), 1, fp);
+	
 	ID3D12Resource* idxBuff = nullptr;
 	resdesc.Width = sizeof(indices);
+
+	heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+	resdesc = CD3DX12_RESOURCE_DESC::Buffer(vertices.size() * sizeof(indices[0]));
 
 	result = dxCommon->GetDevice()->CreateCommittedResource(&heapProp, D3D12_HEAP_FLAG_NONE, &resdesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&idxBuff));
@@ -97,7 +100,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	D3D12_INDEX_BUFFER_VIEW ibView = {};
 	ibView.BufferLocation = idxBuff->GetGPUVirtualAddress();
 	ibView.Format = DXGI_FORMAT_R16_UINT;
-	ibView.SizeInBytes = sizeof(indices);
+	ibView.SizeInBytes = static_cast<UINT>(indices.size() * sizeof(indices[0]));
+	fclose(fp);
+
 
 	ID3DBlob* vsBlob = nullptr;
 	ID3DBlob* psBlob = nullptr;
@@ -183,7 +188,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	gpipeline.BlendState.RenderTarget[0] = renderTargetBlendDesc;
 
 	gpipeline.RasterizerState.MultisampleEnable = false;
-	gpipeline.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;
+	gpipeline.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 	gpipeline.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
 	gpipeline.RasterizerState.DepthClipEnable = true;
 
@@ -201,6 +206,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// アンチエイリアシングのためのサンプル数設定
 	gpipeline.SampleDesc.Count = 1;
 	gpipeline.SampleDesc.Quality = 0;
+
+	// パイプラインステートの設定変更
+	gpipeline.DepthStencilState.DepthEnable = true;
+	gpipeline.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	gpipeline.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
+
+	gpipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT;
 
 	// ルートシグネチャの生成
 	ID3D12RootSignature* rootSignature = nullptr;
@@ -285,8 +297,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	result = texBuff->WriteToSubresource(0, nullptr, img->pixels, 
 		static_cast<UINT>(img->rowPitch), static_cast<UINT>(img->slicePitch));
 
-	XMMATRIX worldMat = XMMatrixRotationY(XM_PIDIV4);
-	XMFLOAT3 eye(0, 0, -15);
+	
+	XMMATRIX worldMat = XMMatrixIdentity();
+	XMFLOAT3 eye(0, 10, -15);
 	XMFLOAT3 target(0, 10, 0);
 	XMFLOAT3 up(0, 1, 0);
 
@@ -302,15 +315,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ID3D12Resource* constBuff = nullptr;
 
 	heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-	resdesc = CD3DX12_RESOURCE_DESC::Buffer((sizeof(worldMat) + 0xff) & ~0xff);
+	resdesc = CD3DX12_RESOURCE_DESC::Buffer((sizeof(MatricesData) + 0xff) & ~0xff);
 
 	dxCommon->GetDevice()->CreateCommittedResource(&heapProp, D3D12_HEAP_FLAG_NONE, &resdesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&constBuff));
 
 	// マップによる定数のコピー
-	XMMATRIX* mapMatrix;
+	MatricesData* mapMatrix;
 	result = constBuff->Map(0, nullptr, (void**)&mapMatrix);
-	*mapMatrix = worldMat * viewMat * projMat;
+	mapMatrix->world = worldMat;
+	mapMatrix->viewproj = viewMat * projMat;
 
 	// ディスクリプタヒープの作成
 	ID3D12DescriptorHeap* basicDescHeap = nullptr;
@@ -351,14 +365,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		imguiManager->Begin();		
+
+		angle += 0.025f;
+		worldMat = XMMatrixRotationY(angle);
+		mapMatrix->world = worldMat;
+		mapMatrix->viewproj = viewMat * projMat;
 		
 		input->Update();
 
 		game->Update();
-
-		angle += 0.025f;
-		worldMat = XMMatrixRotationY(angle);
-		*mapMatrix = worldMat * viewMat * projMat;
 
 		imguiManager->End();
 
@@ -380,7 +395,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		dxCommon->GetCmdList()->SetGraphicsRootDescriptorTable(0,
 			basicDescHeap->GetGPUDescriptorHandleForHeapStart());
 		
-		dxCommon->GetCmdList()->DrawInstanced(vertNum, 1, 0, 0);
+		dxCommon->GetCmdList()->DrawIndexedInstanced(indicesNum, 1, 0, 0,0);
 
 
 #pragma endregion

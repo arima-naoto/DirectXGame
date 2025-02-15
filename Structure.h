@@ -27,3 +27,8 @@ struct PMDVertex {
 	unsigned char boneWeight;
 	unsigned char edgeFlg;
 };
+
+struct MatricesData {
+	XMMATRIX world;
+	XMMATRIX viewproj;
+};

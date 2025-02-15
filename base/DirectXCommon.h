@@ -8,12 +8,6 @@
 #include "wrl.h"
 #include "WinApp.h"
 
-namespace {
-	const uint32_t kNumRTVDescriptor = 4;
-	const uint32_t kLinearRTVStart = 2;
-} // namespace
-
-
 class DirectXCommon {
 
 public: // menber function
