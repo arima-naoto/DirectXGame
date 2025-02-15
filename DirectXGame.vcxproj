@@ -185,6 +185,7 @@
     <ClInclude Include="ImGuiManager.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Scene\Game.h" />
+    <ClInclude Include="Structure.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\BasicPixelShader.hlsl">

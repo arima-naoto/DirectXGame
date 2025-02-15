@@ -104,6 +104,9 @@
     <ClInclude Include="Scene\Game.h">
       <Filter>Assets</Filter>
     </ClInclude>
+    <ClInclude Include="Structure.h">
+      <Filter>Assets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\BasicVertexShader.hlsl">
