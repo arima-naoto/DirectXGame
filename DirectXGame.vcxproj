@@ -96,16 +96,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\input;C:\HomeBrewEngine\DirectXGame\imgui;C:\HomeBrewEngine\DirectXGame\audio;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\lib\vs2019\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libfbxsdk.lib;libfbxsdk-md.lib;libfbxsdk-mt.lib;
-libxml2-md.lib;
-libxml2-mt.lib
-;zlib-md.lib;zlib-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -116,7 +113,7 @@ libxml2-mt.lib
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\input;C:\HomeBrewEngine\DirectXGame\imgui;C:\HomeBrewEngine\DirectXGame\audio;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -124,10 +121,7 @@ libxml2-mt.lib
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\lib\vs2019\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libfbxsdk.lib;libfbxsdk-md.lib;libfbxsdk-mt.lib;
-libxml2-md.lib;
-libxml2-mt.lib
-;zlib-md.lib;zlib-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -136,16 +130,13 @@ libxml2-mt.lib
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\input;C:\HomeBrewEngine\DirectXGame\imgui;C:\HomeBrewEngine\DirectXGame\audio;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\lib\vs2019\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libfbxsdk.lib;libfbxsdk-md.lib;libfbxsdk-mt.lib;
-libxml2-md.lib;
-libxml2-mt.lib
-;zlib-md.lib;zlib-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -156,7 +147,7 @@ libxml2-mt.lib
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\input;C:\HomeBrewEngine\DirectXGame\imgui;C:\HomeBrewEngine\DirectXGame\audio;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -164,10 +155,7 @@ libxml2-mt.lib
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\lib\vs2019\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libfbxsdk.lib;libfbxsdk-md.lib;libfbxsdk-mt.lib;
-libxml2-md.lib;
-libxml2-mt.lib
-;zlib-md.lib;zlib-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -177,9 +165,11 @@ libxml2-mt.lib
     <ClCompile Include="..\External\imgui\imgui_impl_dx12.cpp" />
     <ClCompile Include="..\External\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="..\External\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="audio\Audio.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
-    <ClCompile Include="ImGuiManager.cpp" />
+    <ClCompile Include="imgui\ImGuiManager.cpp" />
+    <ClCompile Include="input\Input.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -190,9 +180,11 @@ libxml2-mt.lib
     <ClInclude Include="..\External\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\External\imgui\imstb_textedit.h" />
     <ClInclude Include="..\External\imgui\imstb_truetype.h" />
+    <ClInclude Include="audio\Audio.h" />
     <ClInclude Include="base\DirectXCommon.h" />
     <ClInclude Include="base\WinApp.h" />
-    <ClInclude Include="ImGuiManager.h" />
+    <ClInclude Include="imgui\ImGuiManager.h" />
+    <ClInclude Include="input\Input.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

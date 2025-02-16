@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Windows.h"
 #include "string"
 
@@ -22,12 +22,14 @@ public:
 
 	HWND GetHWND();
 
+	WNDCLASSEX GetWndClass();
+
 private:
 
 	WinApp() = default;
 	~WinApp() = default;
 	WinApp(const WinApp& obj) = delete;
-	WinApp operator==(const WinApp& obj) = delete;
+	WinApp &operator=(const WinApp& obj) = delete;
 
 private:
 

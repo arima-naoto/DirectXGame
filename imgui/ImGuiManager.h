@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifdef _DEBUG
 #include "d3d12.h"
@@ -40,7 +40,7 @@ private:
 	ImGuiManager() = default;
 	~ImGuiManager() = default;
 	ImGuiManager(const ImGuiManager& obj) = delete;
-	ImGuiManager operator==(const ImGuiManager& obj) = delete;
+	ImGuiManager &operator=(const ImGuiManager& obj) = delete;
 
 };
 

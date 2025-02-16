@@ -58,7 +58,7 @@ private: // menber function
 	DirectXCommon() = default;
 	~DirectXCommon() = default;
 	DirectXCommon(const DirectXCommon& obj) = delete;
-	DirectXCommon operator==(const DirectXCommon& obj) = delete;
+	DirectXCommon &operator=(const DirectXCommon& obj) = delete;
 
 	void InitializeDXGIDevice();
 
