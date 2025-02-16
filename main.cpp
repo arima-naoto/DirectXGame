@@ -41,10 +41,35 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	dxCommon->Initialize(win);
 
 	Vertex vertices[] = {
-		   {{-1.0f, -1.0f, 0.0f },{0.0f,1.0f}},
-		   {{-1.0f,  1.0f, 0.0f },{0.0f,0.0f}},
-		   {{ 1.0f, -1.0f, 0.0f },{1.0f,1.0f}},
-		   {{ 1.0f,  1.0f, 0.0f },{1.0f,0.0f}},
+		   {{ -1.0, -1.0,  1.0}, { 1.0f, 1.0f }} ,
+			{{  1.0, -1.0,  1.0}, { 0.0f, 1.0f }} ,
+			{{  1.0,  1.0,  1.0}, { 0.0f, 0.0f }} ,
+			{{ -1.0,  1.0,  1.0}, { 1.0f, 0.0f }} ,
+			// 背面
+			{{ -1.0, -1.0, -1.0,}, { 1.0f, 1.0f }} ,
+			{{ -1.0,  1.0, -1.0,}, { 0.0f, 1.0f }} ,
+			{{  1.0,  1.0, -1.0,}, { 0.0f, 0.0f }} ,
+			{{  1.0, -1.0, -1.0,}, { 1.0f, 0.0f }} ,
+			// 上面
+			{{ -1.0,  1.0, -1.0}, { 1.0f, 1.0f }} ,
+			{{ -1.0,  1.0,  1.0}, { 0.0f, 1.0f }} ,
+			{{  1.0,  1.0,  1.0}, { 0.0f, 0.0f }} ,
+			{{  1.0,  1.0, -1.0}, { 1.0f, 0.0f }} ,
+			// 底面
+			{{ -1.0, -1.0, -1.0}, { 1.0f, 1.0f }} ,
+			{{  1.0, -1.0, -1.0}, { 0.0f, 1.0f }} ,
+			{{  1.0, -1.0,  1.0}, { 0.0f, 0.0f }} ,
+			{{ -1.0, -1.0,  1.0}, { 1.0f, 0.0f }} ,
+			// 右側面
+			{{  1.0, -1.0, -1.0}, { 1.0f, 1.0f }} ,
+			{{  1.0,  1.0, -1.0}, { 0.0f, 1.0f }} ,
+			{{  1.0,  1.0,  1.0}, { 0.0f, 0.0f }} ,
+			{{  1.0, -1.0,  1.0}, { 1.0f, 0.0f }} ,
+			// 左側面
+			{{ -1.0, -1.0, -1.0}, { 1.0f, 1.0f }} ,
+			{{ -1.0, -1.0,  1.0}, { 0.0f, 1.0f }} ,
+			{{ -1.0,  1.0,  1.0}, { 0.0f, 0.0f }} ,
+			{{ -1.0,  1.0, -1.0}, { 1.0f, 0.0f }} ,
 	};
 
 	HRESULT result = S_FALSE;
@@ -54,17 +79,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	CD3DX12_HEAP_PROPERTIES heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 
 	CD3DX12_RESOURCE_DESC resdesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(vertices));
-
-	//D3D12_RESOURCE_DESC resdesc = {};
-	//resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	//resdesc.Width = ;
-	//resdesc.Height = 1;
-	//resdesc.DepthOrArraySize = 1;
-	//resdesc.MipLevels = 1;
-	//resdesc.Format = DXGI_FORMAT_UNKNOWN;
-	//resdesc.SampleDesc.Count = 1;
-	//resdesc.Flags = D3D12_RESOURCE_FLAG_NONE;
-	//resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	ID3D12Resource* vertBuff = nullptr;
 	result = dxCommon->GetDevice()->CreateCommittedResource(&heapProp, D3D12_HEAP_FLAG_NONE, &resdesc,
@@ -86,7 +100,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	vbView.StrideInBytes = sizeof(vertices[0]);
 
 	unsigned short indices[] = {
-		0,1,2,2,1,3
+			0,  1,  2,  0,  2,  3,  // 前面
+			4,  5,  6,  4,  6,  7,  // 背面
+			8,  9,  10, 8,  10, 11, // 上面
+			12, 13, 14, 12, 14, 15, // 底面
+			16, 17, 18, 16, 18, 19, // 右側面
+			20, 21, 22, 20, 22, 23  // 左側面
 	};
 
 	ID3D12Resource* idxBuff = nullptr;
@@ -481,7 +500,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		
 		angle += 0.01f;
-		worldMat = XMMatrixRotationY(angle);
+		worldMat = XMMatrixRotationX(angle) * XMMatrixRotationZ(angle);
 		*mapMatrix = worldMat * viewMat * projMat;
 
 
@@ -505,7 +524,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		dxCommon->GetCmdList()->SetGraphicsRootDescriptorTable(0,
 			basicDescHeap->GetGPUDescriptorHandleForHeapStart());
 		
-		dxCommon->GetCmdList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
+		dxCommon->GetCmdList()->DrawIndexedInstanced(36, 1, 0, 0, 0);
 
 
 #pragma endregion
