@@ -29,7 +29,7 @@ private:
 	WinApp() = default;
 	~WinApp() = default;
 	WinApp(const WinApp& obj) = delete;
-	WinApp operator==(const WinApp& obj) = delete;
+	WinApp &operator=(const WinApp& obj) = delete;
 
 private:
 

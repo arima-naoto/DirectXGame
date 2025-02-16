@@ -68,8 +68,8 @@ void DirectXCommon::EndDraw()
 {
 	auto bbIdx = swapChain_->GetCurrentBackBufferIndex();
 
-	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(backBuffers_[bbIdx].Get(),
-		D3D12_RESOURCE_STATE_RENDER_TARGET,D3D12_RESOURCE_STATE_PRESENT );
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(backBuffer_[bbIdx].Get(),
+		D3D12_RESOURCE_STATE_RENDER_TARGET,D3D12_RESOURCE_STATE_PRESENT);
 
 	cmdList_->ResourceBarrier(1, &barrier);
 	cmdList_->Close();

@@ -2,6 +2,8 @@
 #include "DirectXCommon.h"
 #include "ImGuiManager.h"
 #include "Input.h"
+#include "Audio.h"
+#include "Input.h"
 #include "Game.h"
 
 #include "Structure.h"
@@ -28,6 +30,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	DirectXCommon* dxCommon = nullptr;
 	Input* input = nullptr;
 	Game* game = nullptr;
+	Input* input = nullptr;
+	Audio* audio = nullptr;
 
 	win = WinApp::GetInstance();
 	win->CreateGameWindow();
@@ -35,9 +39,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	dxCommon = DirectXCommon::GetInstance();
 	dxCommon->Initialize(win);
 
+	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
+	imguiManager->Initialize(win, dxCommon);
+
 	input = Input::GetInstance();
 	input->Initialize();
-
 	HRESULT result = S_FALSE;
 	ID3D12Device* device = dxCommon->GetDevice();
 
@@ -360,6 +366,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	float angle = 0.0f;
 
+	audio = Audio::GetInstance();
+	audio->Initialize();
+
 	while (true) {
 		if (win->ProcessMessage()) {
 			break;
@@ -407,6 +416,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		dxCommon->EndDraw();
 	}
 
+	audio->Finalize();
 	imguiManager->Finalize();
 	win->Terminate();
 
