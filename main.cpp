@@ -2,16 +2,6 @@
 #include "DirectXCommon.h"
 #include "ImGuiManager.h"
 
-#include "DirectXMath.h"
-using namespace DirectX;
-#include "d3dcompiler.h"
-#pragma comment(lib,"d3dcompiler.lib")
-
-struct Vertex {
-	XMFLOAT3 pos;
-	XMFLOAT2 uv;
-};
-
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	WinApp* win = nullptr;
