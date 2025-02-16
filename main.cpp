@@ -43,6 +43,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	input = Input::GetInstance();
 	input->Initialize();
+
+	audio = Audio::GetInstance();
+	audio->Initialize();
+
 	HRESULT result = S_FALSE;
 	ID3D12Device* device = dxCommon->GetDevice();
 
@@ -362,9 +366,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	float angle = 0.0f;
 
-	audio = Audio::GetInstance();
-	audio->Initialize();
-
 	while (true) {
 		if (win->ProcessMessage()) {
 			break;
@@ -386,8 +387,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		dxCommon->BeginDraw();
 		imguiManager->Draw();
 
-#pragma region 四角形の描画命令
-
 		ID3D12GraphicsCommandList *cmdList = dxCommon->GetCmdList();
 
 		cmdList->SetPipelineState(pipelineState);
@@ -403,9 +402,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			basicDescHeap->GetGPUDescriptorHandleForHeapStart());
 		
 		cmdList->DrawIndexedInstanced(indicesNum, 1, 0, 0,0);
-
-
-#pragma endregion
 
 		game->Draw();
 		
