@@ -93,10 +93,10 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\input;C:\HomeBrewEngine\DirectXGame\imgui;C:\HomeBrewEngine\DirectXGame\audio;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Shader;$(ProjectDir)Scene;$(ProjectDir)Resources;$(ProjectDir)imgui;$(ProjectDir)audio;$(ProjectDir)input;$(ProjectDir)base;C:\HomeBrewEngine\DirectXGame\input;C:\HomeBrewEngine\DirectXGame\imgui;C:\HomeBrewEngine\DirectXGame\audio;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -110,10 +110,10 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\Input;C:\HomeBrewEngine\DirectXGame\Scene;C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\math;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Shader;$(ProjectDir)Scene;$(ProjectDir)Resources;$(ProjectDir)imgui;$(ProjectDir)audio;$(ProjectDir)input;$(ProjectDir)base;C:\HomeBrewEngine\DirectXGame\Input;C:\HomeBrewEngine\DirectXGame\Scene;C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\math;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -127,10 +127,10 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\Input;C:\HomeBrewEngine\DirectXGame\Scene;C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\math;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Shader;$(ProjectDir)Scene;$(ProjectDir)Resources;$(ProjectDir)imgui;$(ProjectDir)audio;$(ProjectDir)input;$(ProjectDir)base;C:\HomeBrewEngine\DirectXGame\Input;C:\HomeBrewEngine\DirectXGame\Scene;C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\math;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -144,10 +144,10 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\Input;C:\HomeBrewEngine\DirectXGame\Scene;C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\math;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Shader;$(ProjectDir)Scene;$(ProjectDir)Resources;$(ProjectDir)imgui;$(ProjectDir)audio;$(ProjectDir)input;$(ProjectDir)base;C:\HomeBrewEngine\DirectXGame\Input;C:\HomeBrewEngine\DirectXGame\Scene;C:\HomeBrewEngine\DirectXGame\Shape;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;C:\HomeBrewEngine\DirectXGame\math;C:\HomeBrewEngine\DirectXGame\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

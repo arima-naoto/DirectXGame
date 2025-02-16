@@ -30,7 +30,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	DirectXCommon* dxCommon = nullptr;
 	Input* input = nullptr;
 	Game* game = nullptr;
-	Input* input = nullptr;
 	Audio* audio = nullptr;
 
 	win = WinApp::GetInstance();
@@ -357,9 +356,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	device->CreateConstantBufferView(&cbvDesc, basicHeapHandle);
 
 #pragma endregion
-
-	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
-	imguiManager->Initialize(win, dxCommon);
 
 	game = new Game();
 	game->Initialize();
