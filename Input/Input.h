@@ -57,7 +57,7 @@ private:// メンバ関数
 	/// </summary>
 	/// <param name="obj"></param>
 	/// <returns></returns>
-	Input operator=(const Input& obj) = delete;
+	Input &operator=(const Input& obj) = delete;
 
 	/// <summary>
 	/// DirectInputの初期化
