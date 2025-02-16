@@ -76,7 +76,8 @@ void Audio::PlayWave(const SoundData& soundData,bool loop){
 	XAUDIO2_BUFFER buf{};
 	buf.pAudioData = soundData.pBuffer;
 	buf.AudioBytes = soundData.bufferSize;
-	buf.Flags = loop ? XAUDIO2_LOOP_INFINITE : 0;
+	buf.Flags = XAUDIO2_END_OF_STREAM;
+	buf.LoopCount = loop ? XAUDIO2_LOOP_INFINITE : 0;
 
 	result = pSourceVoice->SubmitSourceBuffer(&buf);
 	result = pSourceVoice->Start();
