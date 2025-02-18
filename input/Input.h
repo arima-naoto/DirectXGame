@@ -15,6 +15,13 @@ using Microsoft::WRL::ComPtr;
 /// </summary>
 class Input
 {
+public:
+	struct MouseState {
+		LONG x = 0;
+		LONG y = 0;
+		BYTE button[3] = {};
+	};
+
 public:// メンバ関数
 
 	/// <summary>
@@ -76,12 +83,16 @@ private:// メンバ関数
 	/// </summary>
 	void MutualExclusionLevel();
 
+
+
 private:
 
 	ComPtr<IDirectInput8> directInput = nullptr;
 	ComPtr<IDirectInputDevice8> keyboard = nullptr;
+	ComPtr<IDirectInputDevice8> mouse = nullptr;
 
 	std::array<BYTE,256> keys = {};
+	MouseState mouseState;
 
 };
 
