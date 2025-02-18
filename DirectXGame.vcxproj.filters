@@ -13,17 +13,44 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ソース ファイル\imgui">
-      <UniqueIdentifier>{f0ed624c-ccd6-4d7b-a22c-e8f8ef50cc73}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\math">
+      <UniqueIdentifier>{f18070f7-0310-44b2-9b2d-a8605bfe942d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\gameSystem">
+      <UniqueIdentifier>{f826c642-2bc1-42cf-8f86-08c3a89a0566}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\base">
+      <UniqueIdentifier>{abc277b7-bc4a-47fd-a1f3-c88f61045779}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\math">
+      <UniqueIdentifier>{fc9840b7-5f60-4e9d-af03-3be785420427}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\imgui">
-      <UniqueIdentifier>{d7647c8b-5982-4bdf-b5c2-d9012e5ff0a9}</UniqueIdentifier>
+      <UniqueIdentifier>{7fbd6fa7-7a13-4089-b363-12976677406b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="シェーダーファイル\FBX">
-      <UniqueIdentifier>{0e4e8394-1962-4486-abd7-9ce41c80f92c}</UniqueIdentifier>
+    <Filter Include="ヘッダー ファイル\base">
+      <UniqueIdentifier>{1adba18f-03f0-41f9-b0b8-ff3936591298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\gameSyetem">
+      <UniqueIdentifier>{7cc5af9a-ba0c-465b-90bc-e900e3e41b31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\imgui">
+      <UniqueIdentifier>{f7c1402e-37da-4f8e-b567-5ea2cf661c4d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="base\DirectXCommon.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="base\WinApp.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\ImGuiManager.cpp">
+      <Filter>ソース ファイル\imgui</Filter>
+    </ClCompile>
     <ClCompile Include="..\External\imgui\imgui.cpp">
       <Filter>ソース ファイル\imgui</Filter>
     </ClCompile>
@@ -42,23 +69,20 @@
     <ClCompile Include="..\External\imgui\imgui_widgets.cpp">
       <Filter>ソース ファイル\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="audio\Audio.cpp">
+      <Filter>ソース ファイル\gameSystem</Filter>
     </ClCompile>
-    <ClCompile Include="base\WinApp.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="base\DirectXCommon.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGuiManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="FBXLoader.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="input\input.cpp">
+      <Filter>ソース ファイル\gameSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="base\DirectXCommon.h">
+      <Filter>ヘッダー ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="base\WinApp.h">
+      <Filter>ヘッダー ファイル\base</Filter>
+    </ClInclude>
     <ClInclude Include="..\External\imgui\imgui.h">
       <Filter>ヘッダー ファイル\imgui</Filter>
     </ClInclude>
@@ -71,6 +95,9 @@
     <ClInclude Include="..\External\imgui\imgui_internal.h">
       <Filter>ヘッダー ファイル\imgui</Filter>
     </ClInclude>
+    <ClInclude Include="imgui\ImGuiManager.h">
+      <Filter>ヘッダー ファイル\imgui</Filter>
+    </ClInclude>
     <ClInclude Include="..\External\imgui\imstb_rectpack.h">
       <Filter>ヘッダー ファイル\imgui</Filter>
     </ClInclude>
@@ -80,36 +107,23 @@
     <ClInclude Include="..\External\imgui\imstb_truetype.h">
       <Filter>ヘッダー ファイル\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="base\WinApp.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="input\Input.h">
+      <Filter>ヘッダー ファイル\gameSyetem</Filter>
     </ClInclude>
-    <ClInclude Include="base\DirectXCommon.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="audio\Audio.h">
+      <Filter>ヘッダー ファイル\gameSyetem</Filter>
     </ClInclude>
-    <ClInclude Include="ImGuiManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="math\Vector3.h">
+      <Filter>ヘッダー ファイル\math</Filter>
     </ClInclude>
-    <ClInclude Include="FBXLoader.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="math\Matrix4x4.h">
+      <Filter>ヘッダー ファイル\math</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Shader\BasicPixelShader.hlsl">
-      <Filter>シェーダーファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Shader\BasicVertexShader.hlsl">
-      <Filter>シェーダーファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="FBXPixelShader.hlsl">
-      <Filter>シェーダーファイル\FBX</Filter>
-    </FxCompile>
-    <FxCompile Include="FBXVertexShader.hlsl">
-      <Filter>シェーダーファイル\FBX</Filter>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shader\BasicShaderHeader.hlsli">
-      <Filter>シェーダーファイル</Filter>
-    </None>
+    <ClInclude Include="math\Vector2.h">
+      <Filter>ヘッダー ファイル\math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vector4.h">
+      <Filter>ヘッダー ファイル\math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
