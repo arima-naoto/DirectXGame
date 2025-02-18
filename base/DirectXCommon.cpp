@@ -1,5 +1,6 @@
 ﻿#include "DirectXCommon.h"
 #include "cassert"
+#include "Vector"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")

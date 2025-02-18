@@ -96,7 +96,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\input;C:\HomeBrewEngine\DirectXGame\imgui;C:\HomeBrewEngine\DirectXGame\audio;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)input;$(ProjectDir)imgui;$(ProjectDir)audio;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;$(ProjectDir)base;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -113,7 +113,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\input;C:\HomeBrewEngine\DirectXGame\imgui;C:\HomeBrewEngine\DirectXGame\audio;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)input;$(ProjectDir)imgui;$(ProjectDir)audio;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;$(ProjectDir)base;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -130,7 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\input;C:\HomeBrewEngine\DirectXGame\imgui;C:\HomeBrewEngine\DirectXGame\audio;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)input;$(ProjectDir)imgui;$(ProjectDir)audio;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;$(ProjectDir)base;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -147,7 +147,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\HomeBrewEngine\DirectXGame\input;C:\HomeBrewEngine\DirectXGame\imgui;C:\HomeBrewEngine\DirectXGame\audio;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;C:\HomeBrewEngine\DirectXGame\base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)input;$(ProjectDir)imgui;$(ProjectDir)audio;C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.2\include;$(ProjectDir)base;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -185,6 +185,10 @@
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="imgui\ImGuiManager.h" />
     <ClInclude Include="input\Input.h" />
+    <ClInclude Include="math\Matrix4x4.h" />
+    <ClInclude Include="math\Vector2.h" />
+    <ClInclude Include="math\Vector3.h" />
+    <ClInclude Include="math\Vector4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

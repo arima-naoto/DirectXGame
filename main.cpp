@@ -35,10 +35,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		input->Update();
 
-		if (input->IsMouseButtonDown(1)) {
-			OutputDebugStringA("hello!\n");
-		}
-
 		imguiManager->End();
 
 		dxCommon->BeginDraw();
