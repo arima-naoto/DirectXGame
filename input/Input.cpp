@@ -1,7 +1,6 @@
 ﻿#include "Input.h"
 #include "WinApp.h"
 #include "cassert"
-
 // シングルトンの定義
 Input* Input::GetInstance(){
 	static Input instance;
