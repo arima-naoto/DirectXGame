@@ -1,14 +1,12 @@
 ﻿#include "WinApp.h"
 #include "DirectXCommon.h"
 #include "ImGuiManager.h"
-#include "Input.h"
 #include "Audio.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	WinApp* win = nullptr;
 	DirectXCommon* dxCommon = nullptr;
-	Input* input = nullptr;
 	Audio* audio = nullptr;
 
 	win = WinApp::GetInstance();
@@ -20,9 +18,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
 	imguiManager->Initialize(win, dxCommon);
 
-	input = Input::GetInstance();
-	input->Initialize();
-
 	audio = Audio::GetInstance();
 	audio->Initialize();
 
@@ -32,8 +27,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		imguiManager->Begin();
-
-		input->Update();
 
 		imguiManager->End();
 
