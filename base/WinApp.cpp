@@ -1,12 +1,5 @@
 ﻿#include "WinApp.h"
 
-#ifdef _DEBUG
-#include "imgui_impl_win32.h"
-extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND, UINT, WPARAM, LPARAM);
-#endif // _DEBUG
-
-
-
 // ウィンドウプロシージャ
 LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
 
@@ -14,10 +7,6 @@ LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
 		PostQuitMessage(0);
 		return 0;
 	}
-
-#ifdef _DEBUG
-	ImGui_ImplWin32_WndProcHandler(hwnd, msg, wp, lp);
-#endif // _DEBUG
 
 	return DefWindowProc(hwnd, msg, wp, lp);
 }
